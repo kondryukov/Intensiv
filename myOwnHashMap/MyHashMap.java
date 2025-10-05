@@ -3,6 +3,7 @@ package myOwnHashMap;
 import java.util.Objects;
 
 public class MyHashMap<K, V> implements MyMap<K, V> {
+    
     private static class Node<K, V> {
         private final K key;
         private V value;
@@ -12,11 +13,13 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
             this.value = value;
             this.next = next;
         }
+        
         @Override
         public int hashCode() {
             return Objects.hash(key, value);
         }
     }
+    
     private Node<K, V>[] buckets;
     private int size;
     private int capacity;
@@ -26,10 +29,12 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         buckets = newBucket(capacity);
         this.size = 0;
     }
+    
     @SuppressWarnings("unchecked")
     private static <K, V> Node<K, V>[] newBucket (int capacity) {
         return (Node<K, V>[]) new Node[capacity];
     }
+    
     @SuppressWarnings("unchecked")
     public void resize() {
         int newCapacity = capacity * 2;
@@ -94,6 +99,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
             resize();
         }
     }
+    
     @Override
     public V remove(K key) {
         int index = (key.hashCode() & 0x7fffffff) % buckets.length;
@@ -116,6 +122,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         }
         return null;
     }
+    
     @Override
     public boolean containsKey(K key) {
         int index = (key.hashCode() & 0x7fffffff) % buckets.length;
